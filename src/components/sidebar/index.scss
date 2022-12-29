@@ -1,0 +1,63 @@
+.sidebar {
+  position: absolute;
+  display: none;
+  background-color: #0f0f0f;
+
+  &-open {
+    display: block;
+    height: 100%;
+    width: 20rem;
+    transition: all 0.5s ease;
+  }
+}
+
+.hamburger-menu {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1;
+  cursor: pointer;
+}
+
+.top-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2rem;
+  height: 0.25rem;
+  background-color: #a0a0a0;
+  transition: all 0.3s ease;
+}
+
+.middle-line {
+  position: absolute;
+  top: 0.75rem;
+  left: 0;
+  width: 2rem;
+  height: 0.25rem;
+  background-color: #a0a0a0;
+  transition: all 0.3s ease;
+}
+
+.bottom-line {
+  position: absolute;
+  top: 1.5rem;
+  left: 0;
+  width: 2rem;
+  height: 0.25rem;
+  background-color: #a0a0a0;
+  transition: all 0.3s ease;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: large;
+}
+
+
