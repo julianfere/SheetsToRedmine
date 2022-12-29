@@ -1,7 +1,15 @@
-# Tauri + React + Typescript
+# Sheets to redmine
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+This is a simple sideproject to import data from a Google Spreadsheet to Redmine using a graphical interface.
 
-## Recommended IDE Setup
+### TODO
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- [x] Setup the project.
+- [x] Create a simple interface to config tokens.
+- [ ] Integrate with sheets api.
+- [ ] Integrate with redmine api.
+- [ ] Create a simple interface to import data and edit on the fly.
+- [ ] Improve the styles.
+- [x] Persist user data.
+- [ ] Add more customization options. (maybe)
+- [ ] Improve this README.md
