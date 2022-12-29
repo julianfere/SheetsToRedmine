@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import "./index.scss";
 
 type HamburgerMenuProps = {
@@ -10,18 +11,21 @@ type OpenSidebarProps = {
 
 const OpenSidebar = ({ closeHandler }: OpenSidebarProps) => {
   return (
-    <section className="sidebar sidebar-open">
+    <aside className="sidebar sidebar-open">
       <div className="close-button" onClick={closeHandler}>
         X
       </div>
       <nav>
         <ul>
           <li>
-            <a href="#">Home</a>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/config">Config</Link>
           </li>
         </ul>
       </nav>
-    </section>
+    </aside>
   );
 };
 

@@ -1,0 +1,43 @@
+
+.token-container {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.token-input {
+  width: 20rem;
+  height: 2rem;
+  border: 1px solid #a0a0a0;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+
+  &:focus {
+    outline: none;
+    border: 1px solid #a0a0a0;
+  }
+
+  &::placeholder {
+    color: #a0a0a0;
+    text-align: center;
+    text-justify: center;
+  }
+
+  &:read-only {
+    background-color: #0f0f0f;
+    color: #a0a0a0;
+  }
+}
+
+.btn {
+  padding: 0.2rem 1rem 0.2rem 1rem;
+  background-color: #0f0f0f;
+  color: #a0a0a0;
+  cursor: pointer;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: #a0a0a0;
+    color: #0f0f0f;
+  }
+}
