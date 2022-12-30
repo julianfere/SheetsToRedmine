@@ -1,11 +1,9 @@
 import { appConfigDir, BaseDirectory } from "@tauri-apps/api/path";
 import {
   writeTextFile,
-  writeBinaryFile,
   exists,
   createDir,
   readTextFile,
-  readBinaryFile,
 } from "@tauri-apps/api/fs";
 
 export type OauthCredentials = {
@@ -34,10 +32,10 @@ export async function saveOptions(options: any) {
 }
 
 export async function saveCredentials(data: OauthCredentials) {
-  await writeBinaryFile(
+  await writeTextFile(
     {
       path: "credentials",
-      contents: new TextEncoder().encode(JSON.stringify(data, null, 2)),
+      contents: JSON.stringify(data, null, 2),
     },
     { dir: BaseDirectory.AppConfig }
   );
@@ -64,9 +62,9 @@ export async function loadCredentials() {
     await createDir(configDir);
   }
 
-  const credentials = await readBinaryFile("credentials", {
+  const credentials = await readTextFile("credentials", {
     dir: BaseDirectory.AppConfig,
   });
 
-  return JSON.parse(Buffer.from(credentials).toString("utf-8"));
+  return JSON.parse(credentials);
 }

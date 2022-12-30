@@ -14,11 +14,9 @@ async fn test_sheet(payload: sheets::SheetPayload) {
 
 #[tauri::command]
 fn open_file(path: String) -> Value {
-    println!("path: {:?}", path);
     let file = std::fs::File::open(path).unwrap();
     let reader = std::io::BufReader::new(file);
     let data: Value = serde_json::from_reader(reader).unwrap();
-    println!("data: {:?}", data);
     return data;
 }
 
