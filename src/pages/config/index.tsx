@@ -11,13 +11,13 @@ import {
 import { invoke } from "@tauri-apps/api/tauri";
 import "./index.scss";
 
-type ConfigObject = {
+export type ConfigObject = {
   redmineToken: string;
   sheetRange: string;
   sheetId: string;
   sheetName: string;
   loadCell: string;
-} & Partial<OauthCredentials>;
+};
 
 const loadCredentialsHandler = async () => {
   const path = await open({

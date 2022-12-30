@@ -446,6 +446,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-table@^7.7.13":
+  version "7.7.13"
+  resolved "https://registry.yarnpkg.com/@types/react-table/-/react-table-7.7.13.tgz#c049e4161d55c140d3abcd9bf2a1783d69004e22"
+  integrity sha512-mQk4FgGeniU0mFqjkO2TNCyoHPkUo3nPlNlnLBbPQGbycqRdxhWwGMKwLQN5lWoIPYvFOMZxvP6IBJbkJhd63g==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^18.0.15":
   version "18.0.26"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.0.26.tgz#8ad59fc01fef8eaf5c74f4ea392621749f0b7917"
@@ -803,6 +810,11 @@ react-router@6.6.1:
   integrity sha512-YkvlYRusnI/IN0kDtosUCgxqHeulN5je+ew8W+iA1VvFhf86kA+JEI/X/8NqYcr11hCDDp906S+SGMpBheNeYQ==
   dependencies:
     "@remix-run/router" "1.2.1"
+
+react-table@^7.8.0:
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/react-table/-/react-table-7.8.0.tgz#07858c01c1718c09f7f1aed7034fcfd7bda907d2"
+  integrity sha512-hNaz4ygkZO4bESeFfnfOft73iBUj8K5oKi1EcSHPAibEydfsX2MyU6Z8KCr3mv3C9Kqqh71U+DhZkFvibbnPbA==
 
 react@^18.2.0:
   version "18.2.0"

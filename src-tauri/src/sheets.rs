@@ -1,7 +1,10 @@
 extern crate google_sheets4 as sheets4;
 use serde::{Deserialize, Serialize};
+use sheets4::api::ValueRange;
 use sheets4::Error;
 use sheets4::{hyper, hyper_rustls, oauth2, Sheets};
+
+use crate::sheets;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct SheetPayload {
@@ -19,7 +22,50 @@ pub struct SheetPayload {
     sheet_range: String,
 }
 
-pub async fn test_sheet(payload: SheetPayload) {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct SheetData {
+    date: String,
+    issue: String,
+    name: String,
+    comment: String,
+    project: String,
+    start: String,
+    end: String,
+    duration: String,
+}
+
+#[derive(Debug)]
+pub enum SheetResponse {
+    Success(Vec<SheetData>),
+    Error(Error),
+}
+
+fn format_to_object(data: ValueRange) -> Vec<SheetData> {
+    let mut result: Vec<SheetData> = Vec::new();
+    for row in data.values.unwrap() {
+        let date = row[0].clone();
+        let issue = row[1].clone();
+        let name = row[2].clone();
+        let comment = row[3].clone();
+        let project = row[4].clone();
+        let start = row[5].clone();
+        let end = row[6].clone();
+        let duration = row[7].clone();
+        result.push(SheetData {
+            date,
+            issue,
+            name,
+            comment,
+            project,
+            start,
+            end,
+            duration,
+        });
+    }
+    result
+}
+
+pub async fn test_sheet(payload: SheetPayload) -> SheetResponse {
     let secret: oauth2::ServiceAccountKey = oauth2::ServiceAccountKey {
         key_type: Some(payload.key_type),
         project_id: Some(payload.project_id),
@@ -48,7 +94,7 @@ pub async fn test_sheet(payload: SheetPayload) {
         ),
         auth,
     );
-    // "19dtqAjeiMi1jo5ILGVm_5cdsIY2b95VmwZnb9TKvwow"
+
     let result = hub
         .spreadsheets()
         .values_get(&payload.sheet_id, &payload.sheet_range)
@@ -66,8 +112,8 @@ pub async fn test_sheet(payload: SheetPayload) {
             | Error::Failure(_)
             | Error::BadRequest(_)
             | Error::FieldClash(_)
-            | Error::JsonDecodeError(_, _) => println!("{}", e),
+            | Error::JsonDecodeError(_, _) => sheets::SheetResponse::Error(e),
         },
-        Ok(res) => println!("Success: {:?}", res),
+        Ok((_, res)) => sheets::SheetResponse::Success(format_to_object(res)),
     }
 }

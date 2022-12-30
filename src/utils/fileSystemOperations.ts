@@ -5,9 +5,10 @@ import {
   createDir,
   readTextFile,
 } from "@tauri-apps/api/fs";
+import { type } from "os";
 
 export type OauthCredentials = {
-  key_type?: string;
+  type?: string;
   project_id?: string;
   private_key_id?: string;
   private_key: string;

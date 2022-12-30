@@ -7,9 +7,12 @@ mod sheets;
 use serde_json::Value;
 
 #[tauri::command]
-async fn test_sheet(payload: sheets::SheetPayload) {
-    println!("test_sheet");
-    sheets::test_sheet(payload).await;
+async fn test_sheet(payload: sheets::SheetPayload) -> Vec<sheets::SheetData> {
+    let data = sheets::test_sheet(payload).await;
+    match data {
+        sheets::SheetResponse::Success(data) => data,
+        sheets::SheetResponse::Error(_err) => Vec::new(),
+    }
 }
 
 #[tauri::command]

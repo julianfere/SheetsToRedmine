@@ -68,7 +68,7 @@
       {
         "fullscreen": false,
         "height": 600,
-        "resizable": true,
+        "resizable": false,
         "title": "Sheets to Redmine",
         "width": 800
       }
