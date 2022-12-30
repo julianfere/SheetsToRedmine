@@ -1,59 +1,28 @@
 .sidebar {
-  z-index: 1;
-  display: none;
   background-color: #0f0f0f;
-
-  &-open {
-    display: block;
-    height: 100%;
-    width: 20rem;
-    transition: all 0.5s ease;
-  }
+  height: 100%;
+  width: 7rem;
 }
 
-.hamburger-menu {
-  width: 4rem;
-  height: 4rem;
-  cursor: pointer;
-  padding: 1rem;
+.styled-nav {  
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 
-.top-line {
-  top: 0;
-  left: 0;
-  width: 2rem;
-  height: 0.25rem;
-  background-color: #a0a0a0;
-  transition: all 0.3s ease;
-}
-
-.middle-line {
-  top: 0.75rem;
-  left: 0;
-  width: 2rem;
-  height: 0.25rem;
-  background-color: #a0a0a0;
-  transition: all 0.3s ease;
-}
-
-.bottom-line {
-  top: 1.5rem;
-  left: 0;
-  width: 2rem;
-  height: 0.25rem;
-  background-color: #a0a0a0;
-  transition: all 0.3s ease;
-}
-
-.close-button {
-  position: absolute;
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.5rem;
+  padding: 1rem 0;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+  width: 100%;
   cursor: pointer;
-  font-weight: 700;
-  font-size: large;
-  margin-left: 18rem;
+
+  &-active {
+    color: #01bf71;
+} 
 }
-
-

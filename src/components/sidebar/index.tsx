@@ -1,50 +1,33 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "./index.scss";
 
-type HamburgerMenuProps = {
-  openHandler: () => void;
-};
-type OpenSidebarProps = {
-  closeHandler: () => void;
-};
-
-const OpenSidebar = ({ closeHandler }: OpenSidebarProps) => {
+export const SideBar = () => {
   return (
-    <aside className="sidebar sidebar-open">
-      <div className="close-button" onClick={closeHandler}>
-        X
-      </div>
+    <aside className="sidebar">
       <nav>
-        <ul>
+        <ul className="styled-nav">
           <li>
-            <Link to="/">Home</Link>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "nav-link nav-link-active" : "nav-link"
+              }
+              to="/"
+            >
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/config">Config</Link>
+            <NavLink
+              className={({ isActive }) =>
+                isActive ? "nav-link nav-link-active" : "nav-link"
+              }
+              to="/config"
+            >
+              Config
+            </NavLink>
           </li>
         </ul>
       </nav>
     </aside>
-  );
-};
-
-const HamburgerMenu = ({ openHandler }: HamburgerMenuProps) => {
-  return (
-    <div className="hamburger-menu" onClick={openHandler}>
-      <div className="top-line"></div>
-      <div className="middle-line"></div>
-      <div className="bottom-line"></div>
-    </div>
-  );
-};
-
-export const SideBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return isOpen ? (
-    <OpenSidebar closeHandler={() => setIsOpen(false)} />
-  ) : (
-    <HamburgerMenu openHandler={() => setIsOpen((old) => !old)} />
   );
 };

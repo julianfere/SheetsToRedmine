@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./index.scss";
 
-type TokenFormProps = {
+type InputFormProps = {
   title: string;
   placeholder: string;
   handler: (token: string) => void;
@@ -16,23 +16,23 @@ const handleSave = (
   setReadonly((old) => !old);
 };
 
-export const TokenForm = ({ handler, placeholder, title }: TokenFormProps) => {
+export const InputForm = ({ handler, placeholder, title }: InputFormProps) => {
   const [isReadOnly, setIsReadOnly] = useState(true);
   const [token, setToken] = useState("");
 
   return (
     <section className="token-container">
-      <h3>{title}</h3>
+      <p className="col1">{title}</p>
       <input
         type="text"
-        className="token-input"
+        className="token-input col2"
         value={token}
         placeholder={placeholder}
         onChange={(e) => setToken(e.target.value)}
         readOnly={isReadOnly}
       />
       <button
-        className="btn"
+        className="btn col3"
         onClick={() => handleSave(token, handler, setIsReadOnly)}
       >
         {isReadOnly ? "Edit" : "Save"}

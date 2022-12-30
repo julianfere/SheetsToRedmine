@@ -1,6 +1,13 @@
-.form-container {
-  margin-top: 5%;
+.container {
   width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,9 +19,32 @@
   justify-content: center;
   margin-top: 5%;
   margin-right: 3rem;
+  gap: .5rem; 
 }
 
-.btn-save {
+.btn {
+
+  &-credentials {
+    width: 12rem;
+    height: 3rem;
+    background-color: #191a1a;
+    color: #fff;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  &-credentials:hover {
+    background-color: #464648;
+  }
+
+  &-save:hover {
+    background-color: #0c5d47;
+  }
+
+  &-save{
   width: 12rem;
   height: 3rem;
   background-color: #0a4b3a;
@@ -24,4 +54,5 @@
   font-size: 1.2rem;
   font-weight: 600;
   cursor: pointer;
+}
 }

@@ -1,16 +1,43 @@
 import { useState, useEffect } from "react";
 import { SideBar } from "../../components/sidebar";
-import { TokenForm } from "../../components/token-form";
-import { message } from "@tauri-apps/api/dialog";
+import { InputForm } from "../../components/input-form";
+import { message, open } from "@tauri-apps/api/dialog";
+import {
+  saveOptions,
+  loadOptions,
+  saveCredentials,
+  OauthCredentials,
+} from "../../utils/fileSystemOperations";
+import { invoke } from "@tauri-apps/api/tauri";
 import "./index.scss";
-import { saveOptions } from "../../utils/saveOptions";
-import { loadOptions } from "../../utils/loadOptions";
 
 type ConfigObject = {
   redmineToken: string;
-  sheetsToken: string;
+  sheetRange: string;
   sheetId: string;
   sheetName: string;
+  loadCell: string;
+} & Partial<OauthCredentials>;
+
+const loadCredentialsHandler = async () => {
+  const path = await open({
+    multiple: false,
+    filters: [
+      {
+        name: "*",
+        extensions: ["json"],
+      },
+    ],
+  });
+
+  if (path) {
+    const res = await invoke("open_file", { path });
+    await saveCredentials(res as OauthCredentials);
+    await message("Credentials saved!", {
+      title: "Config Manager",
+      type: "info",
+    });
+  }
 };
 
 const saveHandler = async (payload: ConfigObject) => {
@@ -26,62 +53,77 @@ const saveHandler = async (payload: ConfigObject) => {
 };
 
 export const Config = () => {
-  const [sheetsToken, setSheetsToken] = useState("SheetsToken");
-  const [redmineToken, setRedmineToken] = useState("RedmineToken");
-  const [sheetId, setSheetId] = useState("SheetId");
-  const [sheetName, setSheetName] = useState("SheetName");
+  const [config, setConfig] = useState<ConfigObject>({} as ConfigObject);
 
   useEffect(() => {
     loadOptions().then((options) => {
-      setRedmineToken(options.redmineToken);
-      setSheetsToken(options.sheetsToken);
-      setSheetId(options.sheetId);
-      setSheetName(options.sheetName);
+      setConfig((old) => ({ ...old, ...options }));
     });
   }, []);
 
   return (
     <>
       <SideBar />
-      <section className="form-container">
-        <h1>Tokens</h1>
-        <TokenForm
-          placeholder={redmineToken}
-          title="Redmine"
-          handler={(token) => setRedmineToken(token)}
-        />
-        <TokenForm
-          placeholder={sheetsToken}
-          title="Sheets"
-          handler={(token) => setSheetsToken(token)}
-        />
-        <h1>Sheet config</h1>
-        <TokenForm
-          placeholder={sheetId}
-          title="SheetId"
-          handler={(id) => setSheetId(id)}
-        />
-        <TokenForm
-          title="SheetName"
-          placeholder={sheetName}
-          handler={(name) => setSheetName(name)}
-        />
+      <article className="container">
+        <section className="form-container">
+          <div>
+            <InputForm
+              placeholder={config.redmineToken}
+              title="Redmine token"
+              handler={(token) =>
+                setConfig((old) => ({ ...old, redmineToken: token }))
+              }
+            />
+            <InputForm
+              placeholder={config.sheetRange}
+              title="Sheet range"
+              handler={(range) =>
+                setConfig((old) => ({ ...old, sheetRange: range }))
+              }
+            />
+            <InputForm
+              placeholder={config.sheetId}
+              title="Spread sheet id"
+              handler={(id) => setConfig((old) => ({ ...old, sheetId: id }))}
+            />
+          </div>
+          <div>
+            <InputForm
+              title="Sheet name"
+              placeholder={config.sheetName}
+              handler={(name) =>
+                setConfig((old) => ({ ...old, sheetName: name }))
+              }
+            />
+            <InputForm
+              title="Load cell"
+              placeholder={config.loadCell}
+              handler={(cell) =>
+                setConfig((old) => ({ ...old, loadCell: cell }))
+              }
+            />
+          </div>
+        </section>
         <section className="btn-container">
+          <button className="btn-credentials" onClick={loadCredentialsHandler}>
+            Load credentials
+          </button>
           <button
             className="btn-save"
             onClick={() =>
               saveHandler({
-                redmineToken,
-                sheetsToken,
-                sheetId,
-                sheetName,
+                redmineToken: config.redmineToken,
+                sheetRange: config.sheetRange,
+                sheetId: config.sheetId,
+                sheetName: config.sheetName,
+                loadCell: config.loadCell,
               })
             }
           >
             Save changes
           </button>
         </section>
-      </section>
+      </article>
     </>
   );
 };
