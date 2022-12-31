@@ -32,6 +32,7 @@ pub struct SheetData {
     start: String,
     end: String,
     duration: String,
+    loaded: bool,
 }
 
 #[derive(Debug)]
@@ -51,6 +52,7 @@ fn format_to_object(data: ValueRange) -> Vec<SheetData> {
         let start = row[5].clone();
         let end = row[6].clone();
         let duration = row[7].clone();
+        let loaded = row[8] != "";
         result.push(SheetData {
             date,
             issue,
@@ -60,12 +62,13 @@ fn format_to_object(data: ValueRange) -> Vec<SheetData> {
             start,
             end,
             duration,
+            loaded,
         });
     }
     result
 }
 
-pub async fn test_sheet(payload: SheetPayload) -> SheetResponse {
+pub async fn import_data_from_sheet(payload: SheetPayload) -> SheetResponse {
     let secret: oauth2::ServiceAccountKey = oauth2::ServiceAccountKey {
         key_type: Some(payload.key_type),
         project_id: Some(payload.project_id),

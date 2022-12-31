@@ -7,8 +7,8 @@ mod sheets;
 use serde_json::Value;
 
 #[tauri::command]
-async fn test_sheet(payload: sheets::SheetPayload) -> Vec<sheets::SheetData> {
-    let data = sheets::test_sheet(payload).await;
+async fn import_data(payload: sheets::SheetPayload) -> Vec<sheets::SheetData> {
+    let data = sheets::import_data_from_sheet(payload).await;
     match data {
         sheets::SheetResponse::Success(data) => data,
         sheets::SheetResponse::Error(_err) => Vec::new(),
@@ -25,7 +25,7 @@ fn open_file(path: String) -> Value {
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![test_sheet, open_file])
+        .invoke_handler(tauri::generate_handler![import_data, open_file])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
