@@ -3,43 +3,113 @@ import { useTable } from "react-table";
 import "./index.scss";
 
 export const Table = ({ data }: { data: any }) => {
+  const EditableCell = ({
+    value: initialValue,
+    row: { index },
+    column: { id },
+    updateMyData,
+    className,
+  }: any) => {
+    // We need to keep and update the state of the cell normally
+    const [value, setValue] = useState(initialValue);
+
+    const onChange = (e: { target: { value: any } }) => {
+      setValue(e.target.value);
+    };
+
+    // We'll only update the external data when the input is blurred
+    const onBlur = () => {
+      updateMyData(index, id, value);
+    };
+
+    // If the initialValue is changed external, sync it up with our state
+    useEffect(() => {
+      setValue(initialValue);
+    }, [initialValue]);
+
+    return (
+      <input
+        className={className}
+        value={value}
+        onChange={onChange}
+        onBlur={onBlur}
+      />
+    );
+  };
+
   const columns = useMemo(
     () => [
       {
         Header: "Date",
         accessor: "date",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-date" }} />
+        ),
       },
       {
         Header: "Issue",
         accessor: "issue",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-issue" }} />
+        ),
       },
       {
         Header: "Name",
         accessor: "name",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-name" }} />
+        ),
       },
       {
         Header: "Comment",
         accessor: "comment",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col" }} />
+        ),
       },
       {
         Header: "Project",
         accessor: "project",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-project" }} />
+        ),
       },
       {
         Header: "Start",
         accessor: "start",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-start" }} />
+        ),
       },
       {
         Header: "End",
         accessor: "end",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-end" }} />
+        ),
       },
       {
         Header: "Duration",
         accessor: "duration",
+        Cell: (props: any) => (
+          <EditableCell {...{ ...props, className: "col col-time" }} />
+        ),
       },
       {
         Header: "Loaded",
         accessor: "loaded",
+        Cell: (props: any) => {
+          const { value } = props;
+          return (
+            <input
+              type="checkbox"
+              className="col col-loaded"
+              checked={value}
+              disabled
+              onChange={() => {}}
+            />
+          );
+        },
       },
     ],
     []
