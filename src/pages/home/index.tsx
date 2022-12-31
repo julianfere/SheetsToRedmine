@@ -11,6 +11,19 @@ import {
 import { ConfigObject } from "../config";
 import "./index.scss";
 
+const initialData = () =>
+  Array(10).fill({
+    date: "",
+    issue: "",
+    name: "",
+    comment: "",
+    project: "",
+    start: "",
+    end: "",
+    duration: "",
+    loaded: "",
+  });
+
 type SheetPayload = {
   key_type: string;
   project_id: string;
@@ -35,7 +48,7 @@ export type SheetResponse = {
   start: string;
   end: string;
   duration: string;
-  loaded: string;
+  loaded: boolean;
 };
 
 const parsePayload = (
@@ -56,7 +69,7 @@ const handleClick = async (
   const credentials = await loadCredentials();
   const options = await loadOptions();
 
-  const res: SheetResponse[] = await invoke("test_sheet", {
+  const res: SheetResponse[] = await invoke("import_data", {
     payload: parsePayload(options, credentials),
   });
   dispatch((prev) => [...res]);
@@ -71,19 +84,7 @@ const handleExportClick = async () => {
 };
 
 function Home() {
-  const [tableData, setTableData] = useState<SheetResponse[]>([
-    {
-      date: "_______",
-      issue: "___________",
-      name: "___________",
-      comment: "___________",
-      project: "___________",
-      start: "___________",
-      end: "___________",
-      duration: "___________",
-      loaded: "___________",
-    },
-  ]);
+  const [tableData, setTableData] = useState<SheetResponse[]>(initialData);
   return (
     <>
       <SideBar />
@@ -100,6 +101,7 @@ function Home() {
           </button>
         </div>
         <Table data={tableData} />
+        <section className="info-container"></section>
       </main>
     </>
   );

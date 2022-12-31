@@ -17,6 +17,8 @@ export type ConfigObject = {
   sheetId: string;
   sheetName: string;
   loadCell: string;
+  hoursPerDay: string;
+  workDays: string;
 };
 
 const loadCredentialsHandler = async () => {
@@ -65,49 +67,76 @@ export const Config = () => {
     <>
       <SideBar />
       <article className="container">
-        <section className="form-container">
-          <div>
+        <details>
+          <summary>Credential Config</summary>
+          <section className="form-container">
+            <div>
+              <InputForm
+                placeholder={config.redmineToken}
+                title="Redmine token"
+                handler={(token) =>
+                  setConfig((old) => ({ ...old, redmineToken: token }))
+                }
+              />
+              <InputForm
+                placeholder={config.sheetRange}
+                title="Sheet range"
+                handler={(range) =>
+                  setConfig((old) => ({ ...old, sheetRange: range }))
+                }
+              />
+              <InputForm
+                placeholder={config.sheetId}
+                title="Spread sheet id"
+                handler={(id) => setConfig((old) => ({ ...old, sheetId: id }))}
+              />
+            </div>
+            <div>
+              <InputForm
+                title="Sheet name"
+                placeholder={config.sheetName}
+                handler={(name) =>
+                  setConfig((old) => ({ ...old, sheetName: name }))
+                }
+              />
+              <InputForm
+                title="Load cell"
+                placeholder={config.loadCell}
+                handler={(cell) =>
+                  setConfig((old) => ({ ...old, loadCell: cell }))
+                }
+              />
+            </div>
+          </section>
+          <section className="btn-container">
+            <button
+              className="btn-credentials"
+              onClick={loadCredentialsHandler}
+            >
+              Load credentials
+            </button>
+          </section>
+        </details>
+        <details>
+          <summary>Work load config</summary>
+          <section className="form-container">
             <InputForm
-              placeholder={config.redmineToken}
-              title="Redmine token"
-              handler={(token) =>
-                setConfig((old) => ({ ...old, redmineToken: token }))
-              }
-            />
-            <InputForm
-              placeholder={config.sheetRange}
-              title="Sheet range"
-              handler={(range) =>
-                setConfig((old) => ({ ...old, sheetRange: range }))
-              }
-            />
-            <InputForm
-              placeholder={config.sheetId}
-              title="Spread sheet id"
-              handler={(id) => setConfig((old) => ({ ...old, sheetId: id }))}
-            />
-          </div>
-          <div>
-            <InputForm
-              title="Sheet name"
-              placeholder={config.sheetName}
-              handler={(name) =>
-                setConfig((old) => ({ ...old, sheetName: name }))
-              }
-            />
-            <InputForm
-              title="Load cell"
-              placeholder={config.loadCell}
+              title="Work load"
+              placeholder={config.hoursPerDay}
               handler={(cell) =>
-                setConfig((old) => ({ ...old, loadCell: cell }))
+                setConfig((old) => ({ ...old, hoursPerDay: cell }))
               }
             />
-          </div>
-        </section>
+            <InputForm
+              title="Work days"
+              placeholder={config.workDays}
+              handler={(cell) =>
+                setConfig((old) => ({ ...old, workDays: cell }))
+              }
+            />
+          </section>
+        </details>
         <section className="btn-container">
-          <button className="btn-credentials" onClick={loadCredentialsHandler}>
-            Load credentials
-          </button>
           <button
             className="btn-save"
             onClick={() =>
@@ -117,6 +146,8 @@ export const Config = () => {
                 sheetId: config.sheetId,
                 sheetName: config.sheetName,
                 loadCell: config.loadCell,
+                hoursPerDay: config.hoursPerDay,
+                workDays: config.workDays,
               })
             }
           >
