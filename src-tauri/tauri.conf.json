@@ -67,10 +67,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "height": 700,
         "resizable": false,
         "title": "Sheets to Redmine",
-        "width": 800
+        "width": 900
       }
     ]
   }
