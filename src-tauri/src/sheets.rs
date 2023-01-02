@@ -43,16 +43,19 @@ pub enum SheetResponse {
 
 fn format_to_object(data: ValueRange) -> Vec<SheetData> {
     let mut result: Vec<SheetData> = Vec::new();
-    for row in data.values.unwrap() {
-        let date = row[0].clone();
-        let issue = row[1].clone();
-        let name = row[2].clone();
-        let comment = row[3].clone();
-        let project = row[4].clone();
-        let start = row[5].clone();
-        let end = row[6].clone();
-        let duration = row[7].clone();
-        let loaded = row[8] != "";
+    let default_string = &"".to_string();
+    let binding = data.values.unwrap();
+    let filtered_data = binding.iter().filter(|x| x[0].len() > 0);
+    for row in filtered_data {
+        let date = row.get(0).unwrap_or(default_string).to_string();
+        let issue = row.get(1).unwrap_or(default_string).to_string();
+        let name = row.get(2).unwrap_or(default_string).to_string();
+        let comment = row.get(3).unwrap_or(default_string).to_string();
+        let project = row.get(4).unwrap_or(default_string).to_string();
+        let start = row.get(5).unwrap_or(default_string).to_string();
+        let end = row.get(6).unwrap_or(default_string).to_string();
+        let duration = row.get(7).unwrap_or(default_string).to_string();
+        let loaded = row.get(8).unwrap_or(default_string) != "";
         result.push(SheetData {
             date,
             issue,
