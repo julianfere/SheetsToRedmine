@@ -9,6 +9,7 @@ This is a simple sideproject to import data from a Google Spreadsheet to Redmine
 - [x] Persist user data.
 - [x] Integrate with sheets api.
 - [x] Create a simple interface to import data and edit on the fly.
+- [ ] Visualize load errors from Redmine.
 - [ ] Integrate with redmine api.
 - [ ] Add option to group inputs by date.
 - [ ] Improve the styles.
