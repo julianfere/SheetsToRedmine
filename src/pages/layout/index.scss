@@ -1,10 +1,11 @@
 .parent {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: 6rem repeat(4, 1fr);
   grid-template-rows: repeat(5, 1fr);
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  }
+  width: 100%;
+}
   
-  .div1 { grid-area: 1 / 1 / 6 / 2; }
-  .div2 { grid-area: 1 / 2 / 6 / 6; }
+  .sidebar { grid-area: 1 / 1 / 6 / 2; }
+  .content { grid-area: 1 / 2 / 6 / 6; }
