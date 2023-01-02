@@ -68,6 +68,7 @@ fn format_to_object(data: ValueRange) -> Vec<SheetData> {
             loaded,
         });
     }
+    println!("{:?}", result);
     result
 }
 

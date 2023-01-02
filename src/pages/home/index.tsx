@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch } from "react";
 import { SideBar } from "../../components/sidebar";
 import { Table } from "../../components/table";
 import { message } from "@tauri-apps/api/dialog";
@@ -10,46 +10,9 @@ import {
 } from "../../utils/fileSystemOperations";
 import { ConfigObject } from "../config";
 import "./index.scss";
-
-const initialData = () =>
-  Array(10).fill({
-    date: "",
-    issue: "",
-    name: "",
-    comment: "",
-    project: "",
-    start: "",
-    end: "",
-    duration: "",
-    loaded: "",
-  });
-
-type SheetPayload = {
-  key_type: string;
-  project_id: string;
-  private_key_id: string;
-  private_key: string;
-  client_email: string;
-  client_id: string;
-  auth_uri: string;
-  token_uri: string;
-  auth_provider_x509_cert_url: string;
-  client_x509_cert_url: string;
-  sheet_id: string;
-  sheet_range: string;
-};
-
-export type SheetResponse = {
-  date: string;
-  issue: string;
-  name: string;
-  comment: string;
-  project: string;
-  start: string;
-  end: string;
-  duration: string;
-  loaded: boolean;
-};
+import { useAppContext } from "../../context/appContext";
+import { SheetPayload, SheetResponse } from "./types";
+import { AppAction } from "../../context/domain";
 
 const parsePayload = (
   config: ConfigObject,
@@ -63,17 +26,15 @@ const parsePayload = (
   } as SheetPayload;
 };
 
-const handleClick = async (
-  dispatch: Dispatch<SetStateAction<SheetResponse[]>>
-) => {
+const handleClick = async (dispatch: Dispatch<AppAction>) => {
   const credentials = await loadCredentials();
   const options = await loadOptions();
 
   const res: SheetResponse[] = await invoke("import_data", {
     payload: parsePayload(options, credentials),
   });
-  dispatch((prev) => [...res]);
-  console.log(res);
+  dispatch({ _tag: "SET_TABLE_DATA", tableData: res });
+  dispatch({ _tag: "SET_UPDATE_TO_TRUE" });
 };
 
 const handleExportClick = async () => {
@@ -83,28 +44,27 @@ const handleExportClick = async () => {
   });
 };
 
-function Home() {
-  const [tableData, setTableData] = useState<SheetResponse[]>(initialData);
+const Home = () => {
+  const { state, dispatch } = useAppContext();
   return (
     <>
-      <SideBar />
       <main className="main">
         <div className="btn-container">
           <button
-            className="btn-credentials"
-            onClick={() => handleClick(setTableData)}
+            className={state.update ? "btn-update" : "btn-credentials"}
+            onClick={() => handleClick(dispatch)}
           >
-            Import data
+            {state.update ? "Update data" : "Import data"}
           </button>
           <button className="btn-save" onClick={handleExportClick}>
             Export data
           </button>
         </div>
-        <Table data={tableData} />
+        <Table data={state.tableData} />
         <section className="info-container"></section>
       </main>
     </>
   );
-}
+};
 
-export default Home;
+export { Home };

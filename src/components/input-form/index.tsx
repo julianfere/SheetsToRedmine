@@ -1,12 +1,6 @@
 import { useState } from "react";
 import "./index.scss";
-
-type InputFormProps = {
-  title: string;
-  placeholder: string;
-  handler: (token: string) => void;
-};
-
+import { InputFormProps } from "./types";
 const handleSave = (
   token: string,
   handler: (token: string) => void,
@@ -18,7 +12,7 @@ const handleSave = (
 
 export const InputForm = ({ handler, placeholder, title }: InputFormProps) => {
   const [isReadOnly, setIsReadOnly] = useState(true);
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(placeholder);
 
   return (
     <section className="token-container">

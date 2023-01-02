@@ -10,19 +10,16 @@ export const Table = ({ data }: { data: any }) => {
     updateMyData,
     className,
   }: any) => {
-    // We need to keep and update the state of the cell normally
     const [value, setValue] = useState(initialValue);
 
     const onChange = (e: { target: { value: any } }) => {
       setValue(e.target.value);
     };
 
-    // We'll only update the external data when the input is blurred
     const onBlur = () => {
       updateMyData(index, id, value);
     };
 
-    // If the initialValue is changed external, sync it up with our state
     useEffect(() => {
       setValue(initialValue);
     }, [initialValue]);
@@ -117,8 +114,6 @@ export const Table = ({ data }: { data: any }) => {
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data });
-
-  console.log(data);
 
   return (
     <section className="table-container">

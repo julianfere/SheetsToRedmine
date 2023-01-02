@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { SideBar } from "../../components/sidebar";
+import { Dispatch, useEffect, useState } from "react";
 import { InputForm } from "../../components/input-form";
 import { message, open } from "@tauri-apps/api/dialog";
 import {
@@ -10,16 +9,8 @@ import {
 } from "../../utils/fileSystemOperations";
 import { invoke } from "@tauri-apps/api/tauri";
 import "./index.scss";
-
-export type ConfigObject = {
-  redmineToken: string;
-  sheetRange: string;
-  sheetId: string;
-  sheetName: string;
-  loadCell: string;
-  hoursPerDay: string;
-  workDays: string;
-};
+import { AppAction, ConfigObject } from "../../context/domain";
+import { useAppContext } from "../../context/appContext";
 
 const loadCredentialsHandler = async () => {
   const path = await open({
@@ -42,9 +33,13 @@ const loadCredentialsHandler = async () => {
   }
 };
 
-const saveHandler = async (payload: ConfigObject) => {
+const saveHandler = async (
+  payload: ConfigObject,
+  dispatch: Dispatch<AppAction>
+) => {
   try {
     saveOptions(payload);
+    dispatch({ _tag: "SET_CONFIG", config: payload });
     await message("Config Saved!", { title: "Config Manager", type: "info" });
   } catch (err) {
     await message("Error saving config!", {
@@ -56,16 +51,17 @@ const saveHandler = async (payload: ConfigObject) => {
 
 export const Config = () => {
   const [config, setConfig] = useState<ConfigObject>({} as ConfigObject);
+  const { dispatch } = useAppContext();
 
   useEffect(() => {
     loadOptions().then((options) => {
       setConfig((old) => ({ ...old, ...options }));
+      dispatch({ _tag: "SET_CONFIG", config: options });
     });
   }, []);
 
   return (
     <>
-      <SideBar />
       <article className="container">
         <details>
           <summary>Credential Config</summary>
@@ -140,15 +136,18 @@ export const Config = () => {
           <button
             className="btn-save"
             onClick={() =>
-              saveHandler({
-                redmineToken: config.redmineToken,
-                sheetRange: config.sheetRange,
-                sheetId: config.sheetId,
-                sheetName: config.sheetName,
-                loadCell: config.loadCell,
-                hoursPerDay: config.hoursPerDay,
-                workDays: config.workDays,
-              })
+              saveHandler(
+                {
+                  redmineToken: config.redmineToken,
+                  sheetRange: config.sheetRange,
+                  sheetId: config.sheetId,
+                  sheetName: config.sheetName,
+                  loadCell: config.loadCell,
+                  hoursPerDay: config.hoursPerDay,
+                  workDays: config.workDays,
+                },
+                dispatch
+              )
             }
           >
             Save changes
@@ -158,3 +157,4 @@ export const Config = () => {
     </>
   );
 };
+export type { ConfigObject };
