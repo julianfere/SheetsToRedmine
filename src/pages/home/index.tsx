@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api";
-import { Dispatch } from "react";
+import { Dispatch, useEffect } from "react";
 import { Table } from "../../components/table";
 import { message } from "@tauri-apps/api/dialog";
 import {
@@ -46,6 +46,13 @@ const handleExportClick = async () => {
 
 const Home = () => {
   const { state, dispatch } = useAppContext();
+
+  useEffect(() => {
+    loadOptions().then((options) => {
+      dispatch({ _tag: "SET_CONFIG", config: options });
+    });
+  }, []);
+
   return (
     <>
       <main className="main">

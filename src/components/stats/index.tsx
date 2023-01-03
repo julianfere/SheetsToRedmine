@@ -22,60 +22,42 @@ const Stats = () => {
     () =>
       Number(state.config.workDays) * Number(state.config.hoursPerDay) -
       totalHours,
-    [state.config.workDays, state.config.hoursPerDay]
+    [state.config.workDays, state.config.hoursPerDay, totalHours]
   );
 
   const totalWorkload = useMemo(
     () => Number(state.config.workDays) * Number(state.config.hoursPerDay),
-    [state.config.workDays, state.config.hoursPerDay]
+    [state.config.workDays, state.config.hoursPerDay, totalHours]
   );
   return (
-    <footer className="stats">
-      <ul className="stats__list">
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Rows imported</span>:{" "}
-            {state.update ? state.tableData.length : 0}
-          </span>
-        </li>
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Total hours</span>:{" "}
-            {isNaN(totalHours) ? 0 : totalHours}
-          </span>
-        </li>
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Work days</span>:{" "}
-            {state.config.workDays}
-          </span>
-        </li>
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Work hours</span>:{" "}
-            {state.config.hoursPerDay}
-          </span>
-        </li>
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Work load</span>:{" "}
-            {totalHours > remainingHours ? totalWorkload - remainingHours : 0}
-          </span>
-        </li>
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Remaining hours</span>:{" "}
-            {isNaN(remainingHours) ? 0 : remainingHours}
-          </span>
-        </li>
-        <li>
-          <span className="stats__label">
-            <span className="label__key">Extra hours</span>:{" "}
-            {isNaN(remainingHours) ? 0 : -remainingHours}
-          </span>
-        </li>
-      </ul>
-    </footer>
+    <table className="stats__table">
+      <thead>
+        <tr>
+          <th>Rows imported</th>
+          <th>Total hours</th>
+          <th>Work days</th>
+          <th>Work hours</th>
+          <th>Work load</th>
+          <th>Remaining hours</th>
+          <th>Extra hours</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{state.update ? state.tableData.length : 0}</td>
+          <td>{isNaN(totalHours) ? 0 : totalHours}</td>
+          <td>{state.config.workDays}</td>
+          <td>{state.config.hoursPerDay}</td>
+          <td>
+            {totalHours < remainingHours ? totalWorkload - remainingHours : 0}
+          </td>
+          <td>{isNaN(remainingHours) ? 0 : remainingHours}</td>
+          <td>
+            {totalHours > remainingHours ? totalHours - remainingHours : 0}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   );
 };
 
