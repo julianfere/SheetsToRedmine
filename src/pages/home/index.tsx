@@ -1,6 +1,5 @@
 import { invoke } from "@tauri-apps/api";
 import { Dispatch } from "react";
-import { SideBar } from "../../components/sidebar";
 import { Table } from "../../components/table";
 import { message } from "@tauri-apps/api/dialog";
 import {
@@ -13,6 +12,7 @@ import "./index.scss";
 import { useAppContext } from "../../context/appContext";
 import { SheetPayload, SheetResponse } from "./types";
 import { AppAction } from "../../context/domain";
+import { Stats } from "../../components/stats";
 
 const parsePayload = (
   config: ConfigObject,
@@ -61,7 +61,7 @@ const Home = () => {
           </button>
         </div>
         <Table data={state.tableData} />
-        <section className="info-container"></section>
+        <Stats />
       </main>
     </>
   );

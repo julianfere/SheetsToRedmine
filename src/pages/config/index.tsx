@@ -89,13 +89,6 @@ export const Config = () => {
             </div>
             <div>
               <InputForm
-                title="Sheet name"
-                placeholder={config.sheetName}
-                handler={(name) =>
-                  setConfig((old) => ({ ...old, sheetName: name }))
-                }
-              />
-              <InputForm
                 title="Load cell"
                 placeholder={config.loadCell}
                 handler={(cell) =>
@@ -141,7 +134,6 @@ export const Config = () => {
                   redmineToken: config.redmineToken,
                   sheetRange: config.sheetRange,
                   sheetId: config.sheetId,
-                  sheetName: config.sheetName,
                   loadCell: config.loadCell,
                   hoursPerDay: config.hoursPerDay,
                   workDays: config.workDays,

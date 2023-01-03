@@ -1,4 +1,4 @@
-import { SheetResponse } from "../pages/layout/types";
+import { SheetResponse } from "../pages/home/types";
 
 type AppState = {
   update: boolean;
@@ -66,7 +66,6 @@ type ConfigObject = {
   redmineToken: string;
   sheetRange: string;
   sheetId: string;
-  sheetName: string;
   loadCell: string;
   hoursPerDay: string;
   workDays: string;

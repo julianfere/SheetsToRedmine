@@ -1,0 +1,27 @@
+.stats {
+  border: 1px solid #ccc;
+  width: 100%;
+  border-radius: 20px;
+  padding: 20px;
+  max-height: 12rem;
+}
+
+.stats__list {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stats__label {
+  font-size: 1.2rem;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+.label__key{
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}

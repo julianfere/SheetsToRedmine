@@ -5,7 +5,6 @@ import {
   createDir,
   readTextFile,
 } from "@tauri-apps/api/fs";
-import { type } from "os";
 
 export type OauthCredentials = {
   type?: string;
@@ -19,6 +18,12 @@ export type OauthCredentials = {
   auth_provider_x509_cert_url?: string;
   client_x509_cert_url?: string;
 };
+
+export async function optionFileExists() {
+  const configDir = await appConfigDir();
+
+  return await exists("options.json", { dir: BaseDirectory.AppConfig });
+}
 
 export async function saveOptions(options: any) {
   const configDir = await appConfigDir();
