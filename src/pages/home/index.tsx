@@ -37,10 +37,9 @@ const handleClick = async (dispatch: Dispatch<AppAction>) => {
   dispatch({ _tag: "SET_UPDATE_TO_TRUE" });
 };
 
-const handleExportClick = async () => {
-  await message("Not implemented yet", {
-    title: "Not implemented yet",
-    type: "error",
+const handleExportClick = async (tableData: any) => {
+  await invoke("export_to_redmine", {
+    payload: { api_key: "123", load_cell: "321", time_entries: tableData },
   });
 };
 
@@ -63,7 +62,10 @@ const Home = () => {
           >
             {state.update ? "Update data" : "Import data"}
           </button>
-          <button className="btn-save" onClick={handleExportClick}>
+          <button
+            className="btn-save"
+            onClick={() => handleExportClick(state.tableData)}
+          >
             Export data
           </button>
         </div>
