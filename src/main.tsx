@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Template } from "./pages/layout";
+import { Layout } from "./pages/layout";
 import { Home } from "./pages/home";
 import "./style.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -10,7 +10,7 @@ import { AppProvider } from "./context/AppProvider";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Template />,
+    element: <Layout />,
     children: [
       {
         path: "/",

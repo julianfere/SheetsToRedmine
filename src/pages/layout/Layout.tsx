@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
-import { SideBar } from "../../components/sidebar";
+import { Sidebar } from "../../components/sidebar";
 import "./index.scss";
 
-export const Template = () => {
+export const Layout = () => {
   return (
     <main className="parent">
-      <SideBar />
+      <Sidebar />
       <section className="content">
         <Outlet />
       </section>

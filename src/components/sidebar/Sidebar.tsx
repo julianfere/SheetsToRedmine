@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import "./index.scss";
 
-export const SideBar = () => {
+export const Sidebar = () => {
   return (
     <aside className="sidebar">
       <nav>
