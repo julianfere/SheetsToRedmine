@@ -64,7 +64,7 @@ export const Config = () => {
     <>
       <article className="container">
         <details>
-          <summary>Credential Config</summary>
+          <summary>Sheet & Redmine config</summary>
           <section className="form-container">
             <div>
               <InputForm
@@ -85,6 +85,13 @@ export const Config = () => {
                 placeholder={config.sheetId}
                 title="Spread sheet id"
                 handler={(id) => setConfig((old) => ({ ...old, sheetId: id }))}
+              />
+              <InputForm
+                placeholder={config.sheetId}
+                title="Redmine url"
+                handler={(url) =>
+                  setConfig((old) => ({ ...old, redmineUrl: url }))
+                }
               />
             </div>
             <div>
@@ -128,19 +135,7 @@ export const Config = () => {
         <section className="btn-container">
           <button
             className="btn-save"
-            onClick={() =>
-              saveHandler(
-                {
-                  redmineToken: config.redmineToken,
-                  sheetRange: config.sheetRange,
-                  sheetId: config.sheetId,
-                  loadCell: config.loadCell,
-                  hoursPerDay: config.hoursPerDay,
-                  workDays: config.workDays,
-                },
-                dispatch
-              )
-            }
+            onClick={() => saveHandler(config, dispatch)}
           >
             Save changes
           </button>

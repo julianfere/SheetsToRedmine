@@ -63,6 +63,7 @@ const appReducer = (state: AppState, action: AppAction): AppState => {
 };
 
 type ConfigObject = {
+  redmineUrl: string;
   redmineToken: string;
   sheetRange: string;
   sheetId: string;

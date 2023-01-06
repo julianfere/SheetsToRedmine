@@ -1,7 +1,6 @@
 import { invoke } from "@tauri-apps/api";
 import { Dispatch, useEffect } from "react";
 import { Table } from "../../components/table";
-import { message } from "@tauri-apps/api/dialog";
 import {
   loadCredentials,
   loadOptions,
@@ -11,7 +10,7 @@ import { ConfigObject } from "../config";
 import "./index.scss";
 import { useAppContext } from "../../context/appContext";
 import { SheetPayload, SheetResponse } from "./types";
-import { AppAction } from "../../context/domain";
+import { AppAction, AppState } from "../../context/domain";
 import { Stats } from "../../components/stats";
 
 const parsePayload = (
@@ -37,10 +36,15 @@ const handleClick = async (dispatch: Dispatch<AppAction>) => {
   dispatch({ _tag: "SET_UPDATE_TO_TRUE" });
 };
 
-const handleExportClick = async (tableData: any) => {
-  await invoke("export_to_redmine", {
-    payload: { api_key: "123", load_cell: "321", time_entries: tableData },
-  });
+const handleExportClick = async (state: AppState) => {
+  const payload = {
+    api_key: state.config.redmineToken,
+    load_cell: state.config.loadCell,
+    time_entries: state.tableData,
+    redmine_url: state.config.redmineUrl,
+  };
+
+  await invoke("export_to_redmine", { payload });
 };
 
 const Home = () => {
@@ -62,10 +66,7 @@ const Home = () => {
           >
             {state.update ? "Update data" : "Import data"}
           </button>
-          <button
-            className="btn-save"
-            onClick={() => handleExportClick(state.tableData)}
-          >
+          <button className="btn-save" onClick={() => handleExportClick(state)}>
             Export data
           </button>
         </div>
